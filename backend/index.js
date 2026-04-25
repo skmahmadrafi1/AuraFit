@@ -20,6 +20,8 @@ import mealLogRouter from './routes/mealLog.js';
 import aiMealRouter from './routes/aiMealPlan.js';
 import adminRouter from './routes/admin.js';
 import notificationsRouter from './routes/notifications.js';
+import TrainingPlan from './models/TrainingPlan.js';
+import Collection from './models/Collection.js';
 
 dotenv.config();
 
@@ -61,9 +63,43 @@ app.get('/api/health', (req, res) => {
 // Temporary seed route
 app.get('/api/seed-plans', async (req, res) => {
   try {
-    const { seedPlansAndCollections } = await import('./seed/seedPlansAndCollections.js');
-    await seedPlansAndCollections();
-    res.json({ ok: true, message: 'Plans and Collections seeded!' });
+    const TRAINING_PLANS = [
+      { name: 'APEX', subtitle: 'Strength Splits', daysPerWeek: 5, level: 'intermediate', category: 'strength', description: 'A high-frequency 5-day strength split for building serious muscle mass.', duration: '30 days', equipment: 'Gym Equipment', tags: ['strength', 'muscle', 'splits'], imageColor: '#1a1a2e', featured: true },
+      { name: 'POWER HOUSE', subtitle: 'Lower Body Strength', daysPerWeek: 4, level: 'intermediate', category: 'strength', description: 'Build powerful legs and a strong posterior chain.', duration: '30 days', equipment: 'Gym Equipment', tags: ['lower body', 'legs', 'glutes', 'strength'], imageColor: '#16213e', featured: true },
+      { name: 'SAGE', subtitle: 'Mindful Strength', daysPerWeek: 3, level: 'base', category: 'yoga', description: 'A 3-day mindful strength program blending yoga, mobility, and bodyweight training.', duration: '30 days', equipment: 'No Equipment', tags: ['yoga', 'mindfulness', 'flexibility', 'beginners'], imageColor: '#1b2838', featured: false },
+      { name: 'CENTAUR', subtitle: 'Power & Speed', daysPerWeek: 4, level: 'advanced', category: 'hiit', description: 'An advanced 4-day athletic program combining explosive power and speed drills.', duration: '30 days', equipment: 'Minimal Equipment', tags: ['athletic', 'speed', 'power', 'advanced'], imageColor: '#0d1117', featured: false },
+      { name: 'NOVA', subtitle: 'Full Body Cardio', daysPerWeek: 5, level: 'base', category: 'cardio', description: 'A beginner-friendly 5-day full body cardio blast.', duration: '30 days', equipment: 'No Equipment', tags: ['cardio', 'fat-loss', 'endurance', 'beginner'], imageColor: '#141414', featured: false },
+      { name: 'IRON WILL', subtitle: 'Upper Body Push & Pull', daysPerWeek: 4, level: 'advanced', category: 'strength', description: 'Four days of intense push/pull upper body training.', duration: '30 days', equipment: 'Gym Equipment', tags: ['upper body', 'push pull', 'strength', 'advanced'], imageColor: '#1e1e2e', featured: false },
+      { name: 'BALANCE', subtitle: 'Core & Flexibility', daysPerWeek: 3, level: 'base', category: 'yoga', description: 'Three focused days on core stability, balance, and full-body flexibility.', duration: '21 days', equipment: 'No Equipment', tags: ['core', 'flexibility', 'balance', 'recovery'], imageColor: '#1a2332', featured: false },
+      { name: 'WILDFIRE', subtitle: 'HIIT Circuit', daysPerWeek: 4, level: 'intermediate', category: 'hiit', description: 'Four days of intense HIIT circuits designed to burn fat and build lean muscle.', duration: '30 days', equipment: 'No Equipment', tags: ['hiit', 'fat-loss', 'circuit', 'intermediate'], imageColor: '#1f1107', featured: false },
+    ];
+
+    const COLLECTIONS = [
+      { name: 'Chest', slug: 'chest', type: 'body-part', description: 'All chest workouts.', workoutCount: 24, tags: ['chest', 'push', 'upper body'], imageColor: '#1a1a2e', featured: true },
+      { name: 'Shoulder', slug: 'shoulder', type: 'body-part', description: 'Build round, defined shoulders.', workoutCount: 18, tags: ['shoulder', 'deltoids', 'upper body'], imageColor: '#16213e', featured: true },
+      { name: 'Firefighters', slug: 'firefighters', type: 'lifestyle', description: 'Functional fitness programs inspired by firefighter training.', workoutCount: 12, tags: ['functional', 'endurance', 'strength'], imageColor: '#1f1107', featured: true },
+      { name: 'For Running & Walking', slug: 'running-walking', type: 'sport', description: 'Workouts designed to complement your running and walking routine.', workoutCount: 20, tags: ['running', 'cardio', 'endurance'], imageColor: '#0d1f0d', featured: true },
+      { name: 'Core, Balance & Stability', slug: 'core-balance-stability', type: 'goal', description: 'Build a rock-solid core.', workoutCount: 30, tags: ['core', 'balance', 'stability', 'abs'], imageColor: '#1a1a35', featured: true },
+      { name: 'Low-Impact Fat Loss', slug: 'low-impact-fat-loss', type: 'goal', description: 'Burn fat without high joint stress.', workoutCount: 22, tags: ['fat-loss', 'low-impact', 'beginner'], imageColor: '#1f1a00', featured: true },
+      { name: 'Back & Spine', slug: 'back-spine', type: 'body-part', description: 'Strengthen your back and protect your spine.', workoutCount: 21, tags: ['back', 'spine', 'posture'], imageColor: '#1a2030', featured: false },
+      { name: 'Arms & Biceps', slug: 'arms-biceps', type: 'body-part', description: 'Sculpt bigger, stronger arms.', workoutCount: 16, tags: ['arms', 'biceps', 'upper body'], imageColor: '#1e1a30', featured: false },
+      { name: 'Legs & Glutes', slug: 'legs-glutes', type: 'body-part', description: 'Build powerful legs and a lifted posterior chain.', workoutCount: 28, tags: ['legs', 'glutes', 'lower body'], imageColor: '#1e1014', featured: false },
+      { name: 'Abs & Core', slug: 'abs-core', type: 'body-part', description: 'Targeted abdominal training.', workoutCount: 26, tags: ['abs', 'core', 'stomach'], imageColor: '#141e1e', featured: false },
+      { name: 'Full Body', slug: 'full-body', type: 'goal', description: 'Efficient full-body workouts.', workoutCount: 35, tags: ['full body', 'efficient', 'total'], imageColor: '#1a1a1a', featured: false },
+      { name: 'HIIT & Cardio', slug: 'hiit-cardio', type: 'goal', description: 'High-intensity interval training and cardio circuits.', workoutCount: 32, tags: ['hiit', 'cardio', 'fat-loss', 'intensity'], imageColor: '#1f1000', featured: false },
+    ];
+
+    const existingPlans = await TrainingPlan.countDocuments();
+    if (existingPlans === 0) {
+      await TrainingPlan.insertMany(TRAINING_PLANS);
+    }
+
+    const existingCols = await Collection.countDocuments();
+    if (existingCols === 0) {
+      await Collection.insertMany(COLLECTIONS);
+    }
+
+    res.json({ ok: true, message: `Seeded ${TRAINING_PLANS.length} plans and ${COLLECTIONS.length} collections!` });
   } catch (err) {
     res.status(500).json({ ok: false, error: err.message });
   }
