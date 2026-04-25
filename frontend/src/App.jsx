@@ -55,22 +55,18 @@ const MainLayout = () => (
 
 const App = () => {
   useEffect(() => {
-    // Silent health check - errors are handled by BackendStatus component
-    const baseUrl = import.meta.env.DEV ? "/api" : (import.meta.env.VITE_API_BASE_URL || "/api");
+    const baseUrl = import.meta.env.VITE_API_URL || "https://aurafit-backend-oary.onrender.com";
     console.info("🔗 Backend URL:", baseUrl);
-    
-    // Silent health check - don't spam console with errors
+
     api
       .get("/health", { timeout: 8000 })
       .then(() => {
         console.info("✅ Backend connected");
       })
       .catch((error) => {
-        // Only log if it's not a blocked request (handled by BackendStatus component)
-        const isBlocked = error?.code === "ERR_BLOCKED_BY_CLIENT" || 
+        const isBlocked = error?.code === "ERR_BLOCKED_BY_CLIENT" ||
                          error?.message?.includes("ERR_BLOCKED_BY_CLIENT");
         if (!isBlocked && error?.code !== "ECONNABORTED") {
-          // Only log actual connection errors, not timeouts or blocks
           console.debug("Backend health check:", error?.message || "Connection failed");
         }
       });
@@ -107,11 +103,9 @@ const App = () => {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/legal/privacy" element={<Privacy />} />
                 <Route path="/legal/terms" element={<Terms />} />
-                {/* Strength Training Routes */}
                 <Route path="/strength" element={<StrengthIndex />} />
                 <Route path="/strength/workout/:id" element={<StrengthWorkoutDetail />} />
                 <Route path="/strength/profile" element={<StrengthProfile />} />
-                {/* New Feature Routes */}
                 <Route path="/ai-generator" element={<AIGenerator />} />
                 <Route path="/pose-detection" element={<PoseDetection />} />
                 <Route path="/challenges" element={<Challenges />} />
@@ -120,7 +114,6 @@ const App = () => {
                 <Route path="/training-plans/:id" element={<TrainingPlanDetail />} />
                 <Route path="/collections" element={<Collections />} />
                 <Route path="/collections/:slug" element={<CollectionDetail />} />
-                {/* Dashboard Routes */}
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/dashboard/workouts" element={<WorkoutTracker />} />
                 <Route path="/dashboard/diet" element={<DietTracker />} />
@@ -138,4 +131,3 @@ const App = () => {
 };
 
 export default App;
-
