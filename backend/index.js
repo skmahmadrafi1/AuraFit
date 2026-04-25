@@ -58,6 +58,17 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Temporary seed route - remove after seeding
+app.get('/api/seed-now', async (req, res) => {
+  try {
+    const { seedDatabase } = await import('./seed/seedData.js');
+    await seedDatabase();
+    res.json({ ok: true, message: 'Seeded successfully!' });
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
 app.use('/api/auth', authRouter);
 app.use('/api/workouts', workoutsRouter);
 app.use('/api/nutrition', nutritionRouter);
@@ -110,19 +121,6 @@ const server = app.listen(PORT, () => {
   console.log(`✅ AuraFit API Server Running!`);
   console.log(`📍 Listening on http://localhost:${PORT}`);
   console.log(`🔗 Health Check: http://localhost:${PORT}/api/health`);
-  console.log("========================================");
-  console.log("📋 Available Endpoints:");
-  console.log(`   • Auth:     http://localhost:${PORT}/api/auth/login`);
-  console.log(`   • Workouts: http://localhost:${PORT}/api/workouts`);
-  console.log(`   • Nutrition: http://localhost:${PORT}/api/nutrition/goal/:goal`);
-  console.log(`   • Planner:  http://localhost:${PORT}/api/planner`);
-  console.log(`   • Community: http://localhost:${PORT}/api/community`);
-  console.log(`   • Pricing:  http://localhost:${PORT}/api/pricing`);
-  console.log(`   • User:     http://localhost:${PORT}/api/user/:id/profile-image`);
-  console.log(`   • AI:       http://localhost:${PORT}/api/ai/workout/generate`);
-  console.log(`   • Challenges: http://localhost:${PORT}/api/challenges`);
-  console.log(`   • Pose:     http://localhost:${PORT}/api/pose/log`);
-  console.log(`   • Progress: http://localhost:${PORT}/api/progress/:userId`);
   console.log("========================================");
   connectMongo();
 });
