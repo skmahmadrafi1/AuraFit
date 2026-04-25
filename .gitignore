@@ -1,0 +1,27 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log
+
+# Build
+dist/
+.dist/
+build/
+
+# Vite cache
+.vite/
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs & debug dumps
+*.log
+*.txt
+*.json.bak
+server*.log
+health*.json
