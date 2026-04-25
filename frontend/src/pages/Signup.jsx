@@ -28,8 +28,8 @@ const Signup = () => {
     }
     setLoading(true);
     try {
-      // Backend route is /auth/register
-      const { data } = await api.post("/auth/register", { name, email, password });
+      // Backend route is /auth/signup
+      const { data } = await api.post("/auth/signup", { name, email, password });
       login(data.token, data.user);
       toast({ title: "Account created! 🎉", description: "Welcome to AuraFit — let's get moving!" });
       navigate("/dashboard");
