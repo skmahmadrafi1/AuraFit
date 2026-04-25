@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AlertCircle, CheckCircle2, Wifi, WifiOff } from "lucide-react";
+import { AlertCircle, WifiOff } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import api from "@/api/client";
@@ -13,10 +13,10 @@ export const BackendStatus = () => {
     
     const checkBackend = async () => {
       try {
-        await api.get("/health", { timeout: 2000 });
+        await api.get("/health", { timeout: 8000 });
         if (mounted) {
           setStatus("connected");
-          setTimeout(() => setShowAlert(false), 5000); // Hide after 5 seconds if connected
+          setTimeout(() => setShowAlert(false), 5000);
         }
       } catch (error: any) {
         if (!mounted) return;
@@ -24,19 +24,15 @@ export const BackendStatus = () => {
         const isBlocked = error?.code === "ERR_BLOCKED_BY_CLIENT" || 
                          error?.message?.includes("ERR_BLOCKED_BY_CLIENT");
         
-        // If blocked, it's likely ad blocker - show helpful message
         if (isBlocked) {
           setStatus("blocked");
         } else {
-          // Otherwise, backend might not be running
           setStatus("disconnected");
         }
       }
     };
 
-    // Initial check after a short delay
     const timeout = setTimeout(checkBackend, 500);
-    // Then check every 30 seconds
     const interval = setInterval(checkBackend, 30000);
     
     return () => {
@@ -76,7 +72,7 @@ export const BackendStatus = () => {
               </Button>
             </div>
             <p className="text-xs mt-2">
-              <strong>To fix:</strong> Disable ad blockers for this site, or check that the backend is running.
+              <strong>To fix:</strong> Disable ad blockers for this site and reload.
             </p>
           </AlertDescription>
         </>
@@ -103,7 +99,7 @@ export const BackendStatus = () => {
               </Button>
             </div>
             <p className="text-xs mt-2">
-              <strong>To start backend:</strong> Open terminal and run: <code className="bg-muted px-1 rounded">cd backend && npm start</code>
+              <strong>Backend:</strong> <code className="bg-muted px-1 rounded">https://aurafit-backend-oary.onrender.com</code>
             </p>
           </AlertDescription>
         </>
@@ -111,4 +107,3 @@ export const BackendStatus = () => {
     </Alert>
   );
 };
-

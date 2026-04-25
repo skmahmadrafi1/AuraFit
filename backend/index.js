@@ -36,8 +36,9 @@ app.use(cors({
     'http://127.0.0.1:5173',
     'http://localhost:5174',
     'http://127.0.0.1:5174',
-    /^http:\/\/192\.168\.\d+\.\d+:\d+$/, // Allow any local network IP
-    /^http:\/\/10\.\d+\.\d+\.\d+:\d+$/, // Allow private network IPs
+    'https://aurafit-frontend.onrender.com',
+    /^http:\/\/192\.168\.\d+\.\d+:\d+$/,
+    /^http:\/\/10\.\d+\.\d+\.\d+:\d+$/,
   ],
   credentials: true,
 }));
@@ -50,7 +51,7 @@ app.get('/api/health', (req, res) => {
     service: 'aurafit-api',
     time: new Date().toISOString(),
     mongo: {
-      state: mongoState, // 0=disconnected,1=connected,2=connecting,3=disconnecting
+      state: mongoState,
       host: mongoose.connection?.host || null,
       name: mongoose.connection?.name || null,
     },
@@ -97,7 +98,6 @@ async function connectMongo() {
   } catch (err) {
     console.error('[ERROR] MongoDB connection failed:', err?.message || err);
     console.warn('[WARN] API will continue to run without a database connection. Update backend/.env and save to retry.');
-    // Schedule a retry
     setTimeout(() => {
       console.log('[INFO] Retrying MongoDB connection...');
       connectMongo();
@@ -105,7 +105,6 @@ async function connectMongo() {
   }
 }
 
-// Start HTTP server regardless of DB state
 const server = app.listen(PORT, () => {
   console.log("========================================");
   console.log(`✅ AuraFit API Server Running!`);
@@ -125,7 +124,6 @@ const server = app.listen(PORT, () => {
   console.log(`   • Pose:     http://localhost:${PORT}/api/pose/log`);
   console.log(`   • Progress: http://localhost:${PORT}/api/progress/:userId`);
   console.log("========================================");
-  // Attempt mongo connect after server starts
   connectMongo();
 });
 
