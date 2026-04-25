@@ -58,12 +58,12 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Temporary seed route - remove after seeding
-app.get('/api/seed-now', async (req, res) => {
+// Temporary seed route
+app.get('/api/seed-plans', async (req, res) => {
   try {
-    const { seedDatabase } = await import('./seed/seedData.js');
-    await seedDatabase();
-    res.json({ ok: true, message: 'Seeded successfully!' });
+    const { seedPlansAndCollections } = await import('./seed/seedPlansAndCollections.js');
+    await seedPlansAndCollections();
+    res.json({ ok: true, message: 'Plans and Collections seeded!' });
   } catch (err) {
     res.status(500).json({ ok: false, error: err.message });
   }
