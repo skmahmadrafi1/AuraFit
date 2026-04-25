@@ -22,8 +22,7 @@ export const BackendStatus = () => {
         if (!mounted) return;
         
         const isBlocked = error?.code === "ERR_BLOCKED_BY_CLIENT" || 
-                         error?.message?.includes("ERR_BLOCKED_BY_CLIENT") ||
-                         error?.request?.responseURL?.includes("localhost:5001");
+                         error?.message?.includes("ERR_BLOCKED_BY_CLIENT");
         
         // If blocked, it's likely ad blocker - show helpful message
         if (isBlocked) {
@@ -77,7 +76,7 @@ export const BackendStatus = () => {
               </Button>
             </div>
             <p className="text-xs mt-2">
-              <strong>To fix:</strong> Disable ad blockers for localhost, or make sure backend is running on port 5001.
+              <strong>To fix:</strong> Disable ad blockers for this site, or check that the backend is running.
             </p>
           </AlertDescription>
         </>

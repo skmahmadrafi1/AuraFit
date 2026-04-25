@@ -1,9 +1,16 @@
 import axios from "axios";
 
-// Use proxy in development to avoid ad blocker issues, use env var in production
-const baseURL = import.meta.env.DEV 
-  ? "/api"  // Use Vite proxy in development (avoids ad blockers)
-  : (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, "") || "/api";
+// In development: use Vite proxy ("/api") → proxied to localhost:5050
+// In production:  use VITE_API_URL env var, falling back to the Render deployment
+const PROD_URL = "https://aurafit-backend-oary.onrender.com";
+
+const baseURL = import.meta.env.DEV
+  ? "/api"
+  : (
+      (import.meta.env.VITE_API_URL as string | undefined) ||
+      (import.meta.env.VITE_API_BASE_URL as string | undefined) ||
+      PROD_URL
+    ).replace(/\/$/, "") + "/api";
 
 export const api = axios.create({
   baseURL,
