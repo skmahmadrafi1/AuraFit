@@ -37,6 +37,8 @@ app.use(cors({
     'http://localhost:5174',
     'http://127.0.0.1:5174',
     'http://localhost:8080',
+    'http://127.0.0.1:8080',
+    'https://aurafit-frontend.onrender.com',
     /^http:\/\/192\.168\.\d+\.\d+:\d+$/,
     /^http:\/\/10\.\d+\.\d+\.\d+:\d+$/,
   ],
