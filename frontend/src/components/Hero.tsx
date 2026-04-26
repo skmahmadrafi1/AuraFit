@@ -7,7 +7,7 @@ export const Hero = () => {
   const navigate = useNavigate();
   
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-hero">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-hero pt-20">
       {/* Hero background image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
@@ -83,8 +83,6 @@ export const Hero = () => {
           </div>
         </div>
       </div>
-
-      
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
