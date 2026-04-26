@@ -42,13 +42,15 @@ import CollectionDetail from "./pages/CollectionDetail.jsx";
 import api from "@/api/client";
 import { BackendStatus } from "@/components/BackendStatus";
 import { Chatbot } from "@/components/Chatbot";
+import { Footer } from "@/components/Footer";
 
 const queryClient = new QueryClient();
 
 const MainLayout = () => (
-  <div className="min-h-screen">
+  <div className="min-h-screen flex flex-col">
     <Navbar />
     <Outlet />
+    <Footer />
     <Chatbot />
   </div>
 );
@@ -97,31 +99,31 @@ const App = () => {
               <Route path="/nutrition" element={<Nutrition />} />
               <Route path="/community" element={<Community />} />
               <Route path="/pricing" element={<PricingPage />} />
-                <Route path="/planner" element={<Planner />} />
-                <Route path="/profile/edit" element={<ProfileEdit />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/legal/privacy" element={<Privacy />} />
-                <Route path="/legal/terms" element={<Terms />} />
-                <Route path="/strength" element={<StrengthIndex />} />
-                <Route path="/strength/workout/:id" element={<StrengthWorkoutDetail />} />
-                <Route path="/strength/profile" element={<StrengthProfile />} />
-                <Route path="/ai-generator" element={<AIGenerator />} />
-                <Route path="/pose-detection" element={<PoseDetection />} />
-                <Route path="/challenges" element={<Challenges />} />
-                <Route path="/progress" element={<Progress />} />
-                <Route path="/training-plans" element={<TrainingPlans />} />
-                <Route path="/training-plans/:id" element={<TrainingPlanDetail />} />
-                <Route path="/collections" element={<Collections />} />
-                <Route path="/collections/:slug" element={<CollectionDetail />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/dashboard/workouts" element={<WorkoutTracker />} />
-                <Route path="/dashboard/diet" element={<DietTracker />} />
-                <Route path="/dashboard/ai-meal-plan" element={<AIMealPlan />} />
-                <Route path="/dashboard/progress" element={<Progress />} />
-                <Route path="/admin" element={<AdminPanel />} />
-              </Route>
-              <Route path="*" element={<NotFound />} />
+              <Route path="/planner" element={<Planner />} />
+              <Route path="/profile/edit" element={<ProfileEdit />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/legal/privacy" element={<Privacy />} />
+              <Route path="/legal/terms" element={<Terms />} />
+              <Route path="/strength" element={<StrengthIndex />} />
+              <Route path="/strength/workout/:id" element={<StrengthWorkoutDetail />} />
+              <Route path="/strength/profile" element={<StrengthProfile />} />
+              <Route path="/ai-generator" element={<AIGenerator />} />
+              <Route path="/pose-detection" element={<PoseDetection />} />
+              <Route path="/challenges" element={<Challenges />} />
+              <Route path="/progress" element={<Progress />} />
+              <Route path="/training-plans" element={<TrainingPlans />} />
+              <Route path="/training-plans/:id" element={<TrainingPlanDetail />} />
+              <Route path="/collections" element={<Collections />} />
+              <Route path="/collections/:slug" element={<CollectionDetail />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard/workouts" element={<WorkoutTracker />} />
+              <Route path="/dashboard/diet" element={<DietTracker />} />
+              <Route path="/dashboard/ai-meal-plan" element={<AIMealPlan />} />
+              <Route path="/dashboard/progress" element={<Progress />} />
+              <Route path="/admin" element={<AdminPanel />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>

@@ -1,4 +1,4 @@
-import { Facebook, Twitter, Instagram, Youtube, Mail } from "lucide-react";
+import { Facebook, Twitter, Instagram, Youtube, Mail, Github, Linkedin, Phone } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +25,6 @@ export const Footer = () => {
     }
 
     if (user) {
-      // Show popup in dashboard if logged in
       setShowSubscribeDialog(true);
       toast({
         title: "Subscribed!",
@@ -39,32 +38,33 @@ export const Footer = () => {
     }
     setEmail("");
   };
+
   const footerSections = [
     {
       title: "Product",
       links: [
-        { name: "Features", href: "#features" },
-        { name: "Pricing", href: "#pricing" },
-        { name: "FAQ", href: "#faq" },
-        { name: "Roadmap", href: "#roadmap" },
+        { name: "Features", href: "/features" },
+        { name: "Pricing", href: "/pricing" },
+        { name: "Workouts", href: "/workouts" },
+        { name: "Training Plans", href: "/training-plans" },
       ],
     },
     {
-      title: "Company",
+      title: "Explore",
       links: [
-        { name: "About Us", href: "#about" },
-        { name: "Careers", href: "#careers" },
-        { name: "Blog", href: "#blog" },
-        { name: "Press Kit", href: "#press" },
+        { name: "Collections", href: "/collections" },
+        { name: "Nutrition", href: "/nutrition" },
+        { name: "Community", href: "/community" },
+        { name: "Planner", href: "/planner" },
       ],
     },
     {
       title: "Resources",
       links: [
-        { name: "Documentation", href: "#docs" },
-        { name: "Guides", href: "#guides" },
-        { name: "API", href: "#api" },
-        { name: "Support", href: "#support" },
+        { name: "Mind & Wellness", href: "/mind" },
+        { name: "AI Generator", href: "/ai-generator" },
+        { name: "Pose Detection", href: "/pose-detection" },
+        { name: "Challenges", href: "/challenges" },
       ],
     },
     {
@@ -94,16 +94,16 @@ export const Footer = () => {
           <div className="col-span-2 space-y-4">
             <div className="flex items-center gap-3">
               <div className="relative w-10 h-10">
-                <img src={logo} alt="AUrafit" className="w-full h-full object-contain" />
+                <img src={logo} alt="AuraFit" className="w-full h-full object-contain" />
               </div>
-              <span className="text-2xl font-display font-bold text-gradient">AUrafit</span>
+              <span className="text-2xl font-display font-bold text-gradient">AuraFit</span>
             </div>
             <p className="text-muted-foreground max-w-xs">
               Train Smarter. Glow Stronger. AI-powered fitness platform for the next generation of athletes.
             </p>
             <div className="flex items-center gap-4">
               {socialLinks.map((social, index) => (
-                <a
+                
                   key={index}
                   href={social.href}
                   aria-label={social.label}
@@ -122,7 +122,7 @@ export const Footer = () => {
               <ul className="space-y-2">
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
-                    <a
+                    
                       href={link.href}
                       className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                     >
@@ -160,13 +160,39 @@ export const Footer = () => {
           </div>
         </div>
 
+        {/* Developer Contact */}
+        <div className="py-8 border-t border-border">
+          <div className="text-center space-y-4">
+            <h4 className="font-display font-bold text-foreground">Developer</h4>
+            <p className="text-white font-semibold text-lg">Sk Mahmad Rafi</p>
+            <div className="flex flex-wrap justify-center gap-6">
+              <a href="tel:+917989116813" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+                <Phone className="w-4 h-4" />
+                +91 7989116813
+              </a>
+              <a href="mailto:skmahmadrafi1@gmail.com" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+                <Mail className="w-4 h-4" />
+                skmahmadrafi1@gmail.com
+              </a>
+              <a href="https://github.com/skmahmadrafi1" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+                <Github className="w-4 h-4" />
+                github.com/skmahmadrafi1
+              </a>
+              <a href="https://www.linkedin.com/in/mahmad-rafi-sk-20286b2b5/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+                <Linkedin className="w-4 h-4" />
+                linkedin.com/in/mahmad-rafi-sk
+              </a>
+            </div>
+          </div>
+        </div>
+
         {/* Bottom bar */}
         <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} AUrafit. All rights reserved.
+            © {new Date().getFullYear()} AuraFit. All rights reserved.
           </p>
           <p className="text-sm text-muted-foreground">
-            Made with 💜 by the AUrafit Team
+            Built with 💜 by <span className="text-primary font-semibold">Sk Mahmad Rafi</span>
           </p>
         </div>
       </div>
