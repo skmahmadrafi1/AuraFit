@@ -99,16 +99,19 @@ export const Footer = () => {
               Train Smarter. Glow Stronger. AI-powered fitness platform for the next generation of athletes.
             </p>
             <div className="flex items-center gap-4">
-              {socialLinks.map((social, index) => (
-                
-                  key={index}
-                  href={social.href}
-                  aria-label={social.label}
-                  className="w-10 h-10 rounded-lg bg-muted hover:bg-primary/20 flex items-center justify-center transition-colors group"
-                >
-                  <social.icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                </a>
-              ))}
+              {socialLinks.map((social, index) => {
+                const Icon = social.icon;
+                return (
+                  
+                    key={index}
+                    href={social.href}
+                    aria-label={social.label}
+                    className="w-10 h-10 rounded-lg bg-muted hover:bg-primary/20 flex items-center justify-center transition-colors group"
+                  >
+                    <Icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </a>
+                );
+              })}
             </div>
           </div>
 
@@ -192,4 +195,22 @@ export const Footer = () => {
 
       <Dialog open={showSubscribeDialog} onOpenChange={setShowSubscribeDialog}>
         <DialogContent>
-          <DialogHe
+          <DialogHeader>
+            <DialogTitle>Welcome to AuraFit Updates!</DialogTitle>
+            <DialogDescription>
+              You're now subscribed to receive the latest fitness tips, product updates, and exclusive offers.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex gap-2 mt-4">
+            <Button variant="outline" onClick={() => setShowSubscribeDialog(false)}>
+              Close
+            </Button>
+            <Button onClick={() => { setShowSubscribeDialog(false); navigate("/dashboard/progress"); }}>
+              Go to Dashboard
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </footer>
+  );
+};
