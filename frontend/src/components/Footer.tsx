@@ -23,7 +23,6 @@ export const Footer = () => {
       });
       return;
     }
-
     if (user) {
       setShowSubscribeDialog(true);
       toast({
@@ -88,9 +87,7 @@ export const Footer = () => {
   return (
     <footer className="bg-card border-t border-border">
       <div className="container mx-auto px-4 py-12">
-        {/* Main footer content */}
         <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
-          {/* Brand column */}
           <div className="col-span-2 space-y-4">
             <div className="flex items-center gap-3">
               <div className="relative w-10 h-10">
@@ -115,7 +112,6 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Links columns */}
           {footerSections.map((section, index) => (
             <div key={index} className="space-y-4">
               <h4 className="font-display font-bold text-foreground">{section.title}</h4>
@@ -135,7 +131,6 @@ export const Footer = () => {
           ))}
         </div>
 
-        {/* Newsletter */}
         <div className="py-8 border-t border-border">
           <div className="max-w-md mx-auto text-center space-y-4">
             <div className="flex items-center justify-center gap-2">
@@ -160,7 +155,6 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Developer Contact */}
         <div className="py-8 border-t border-border">
           <div className="text-center space-y-4">
             <h4 className="font-display font-bold text-foreground">Developer</h4>
@@ -186,7 +180,6 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom bar */}
         <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} AuraFit. All rights reserved.
@@ -197,25 +190,6 @@ export const Footer = () => {
         </div>
       </div>
 
-      {/* Subscribe Dialog for logged-in users */}
       <Dialog open={showSubscribeDialog} onOpenChange={setShowSubscribeDialog}>
         <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Welcome to AuraFit Updates!</DialogTitle>
-            <DialogDescription>
-              You're now subscribed to receive the latest fitness tips, product updates, and exclusive offers.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex gap-2 mt-4">
-            <Button variant="outline" onClick={() => setShowSubscribeDialog(false)}>
-              Close
-            </Button>
-            <Button onClick={() => { setShowSubscribeDialog(false); navigate("/dashboard/progress"); }}>
-              Go to Dashboard
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-    </footer>
-  );
-};
+          <DialogHe
