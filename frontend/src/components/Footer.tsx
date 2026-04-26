@@ -1,7 +1,7 @@
 import { Facebook, Twitter, Instagram, Youtube, Mail, Github, Linkedin, Phone } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate } from "react-router-name";
+import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
