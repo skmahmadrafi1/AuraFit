@@ -49,7 +49,9 @@ const queryClient = new QueryClient();
 const MainLayout = () => (
   <div className="min-h-screen flex flex-col">
     <Navbar />
-    <Outlet />
+    <main className="flex-1 pt-20">
+      <Outlet />
+    </main>
     <Footer />
     <Chatbot />
   </div>
